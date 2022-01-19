@@ -2,30 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Planet : MonoBehaviour
+public abstract class Planet : MonoBehaviour
 {
     // helper
     // Defination of the trail
     public Vector3 center;
     public float radius;
     public float angularVelocity;
+    public PlanetInputAction controls;
     private float currentAngle;
+    public float initialAngle;
     private Vector3 latePosition;
     // Force property of this object
     public float gm;
+    public float inputScale;
+    protected void Awake()
+    {
+        controls = new PlanetInputAction();
+    }
+
+    protected void OnEnable()
+    {
+        controls.Enable();
+    }
     // Start is called before the first frame update
-    void Start()
+    virtual protected void Start()
     {
         currentAngle = 0.0f;
         latePosition = transform.position;
+        currentAngle = initialAngle;
     }
     
     // functions called oer update
     private void UpdateNextPos()
     {
-        currentAngle += angularVelocity * Time.deltaTime;
-        Vector3 pos = new Vector3(center.x + Mathf.Cos(currentAngle) * radius, 
-                                  center.y + Mathf.Sin(currentAngle) * radius, 
+        currentAngle += angularVelocity * Time.deltaTime % 360.0f;
+        float theta = currentAngle / 360.0f * 2.0f * Mathf.PI;
+        Vector3 pos = new Vector3(center.x + Mathf.Cos(theta) * radius, 
+                                  center.y + Mathf.Sin(theta) * radius, 
                                   transform.position.z);
         transform.position = pos;
     }
@@ -34,7 +48,7 @@ public class Planet : MonoBehaviour
 
     }
     // Update is called once per frame
-    void Update()
+    virtual protected void Update()
     {
         UpdateNextPos();
         SelfRotation();
@@ -53,6 +67,6 @@ public class Planet : MonoBehaviour
         float eps = 1e-3f;
         if (diff2d.sqrMagnitude < eps)
             return new Vector2(0.0f, 0.0f);
-        return gm * diff2d / diff2d.sqrMagnitude;
+        return inputScale * gm * diff2d / diff2d.sqrMagnitude;
     }
 }

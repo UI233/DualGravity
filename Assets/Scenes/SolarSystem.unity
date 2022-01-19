@@ -167,7 +167,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.7853982
+  m_Mass: 0.18865107
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -252,8 +252,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101928357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.282, y: 1.204, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.2632, y: -0.0732, z: 0}
+  m_LocalScale: {x: 0.4901, y: 0.4901, z: 0.4901}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -268,7 +268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 222267975}
   - component: {fileID: 222267974}
-  - component: {fileID: 222267973}
+  - component: {fileID: 222267976}
   m_Layer: 6
   m_Name: Planet Push
   m_TagString: Planet
@@ -276,22 +276,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &222267973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222267972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ceeba3fa39f5e3458378cb9c3ca951f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  center: {x: 3.94, y: 0.19, z: 0}
-  radius: 0
-  angularVelocity: 0
-  gm: 1
 --- !u!212 &222267974
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -352,12 +336,30 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222267972}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.94, y: 0.19, z: 0}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &222267976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222267972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ab31a055c2c9940b74877b123ed821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {x: -5, y: 0, z: 0}
+  radius: 0
+  angularVelocity: 0
+  initialAngle: 0
+  gm: 0
+  inputScale: 0.5
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1689163916}
   - component: {fileID: 1689163915}
-  - component: {fileID: 1689163914}
+  - component: {fileID: 1689163917}
   m_Layer: 6
   m_Name: Planet Pull
   m_TagString: Planet
@@ -459,22 +461,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1689163914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689163913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ceeba3fa39f5e3458378cb9c3ca951f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  center: {x: -3.77, y: 0.43, z: 0}
-  radius: 0
-  angularVelocity: 0
-  gm: 2
 --- !u!212 &1689163915
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -535,9 +521,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689163913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.77, y: 0.43, z: 0}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1689163917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689163913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca532acc1051f946aeb8c86f03be03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {x: 2, y: 0, z: 0}
+  radius: 3
+  angularVelocity: 30
+  initialAngle: 0
+  gm: 0
+  inputScale: 0.5
