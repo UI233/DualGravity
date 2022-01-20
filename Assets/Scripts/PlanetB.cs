@@ -25,4 +25,15 @@ public class PlanetB : Planet
     {
         base.Update();
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+            collision.gameObject.GetComponent<Player>().lockAbleB = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+            collision.gameObject.GetComponent<Player>().lockAbleB = false;
+    }
 }

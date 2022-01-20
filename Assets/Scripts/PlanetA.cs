@@ -25,4 +25,16 @@ public class PlanetA : Planet
     {
         base.Update();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+            collision.gameObject.GetComponent<Player>().lockAbleA = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+            collision.gameObject.GetComponent<Player>().lockAbleA = false;
+    }
 }

@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigid2d;
     private CircleCollider2D collider;
     private bool locked;
+    public Vector2 myForce { get; set; }
+
     private void Awake()
     {
         controls = new PlanetInputAction();
@@ -18,31 +20,42 @@ public class Player : MonoBehaviour
     {
         controls.Enable();
         locked = false;
+        lockAbleA = false;
+        lockAbleB = false;
     }
-
+    // control the orbit of the Player
     private float theta;
     private Vector2 dir0;
     private Vector2 dir1;
     private GameObject planet;
     public float angularVelocity = 0.05f;
+    public bool lockAbleA;
+    public bool lockAbleB;
     // Start is called before the first frame update
     void Start()
     {
         controls.GravityControl.LockPlanetA.performed += _ =>
         {
-            locked = true;
-            planet = planets[0];
-            dir0 = transform.position - planets[0].transform.position;
-            dir1 = Vector3.Cross(dir0, new Vector3(0, 0, 1));
-            theta = 0;
+            if (lockAbleA)
+            {
+                // initialize locking variables
+                locked = true;
+                planet = planets[0];
+                dir0 = transform.position - planets[0].transform.position;
+                dir1 = Vector3.Cross(dir0, new Vector3(0, 0, 1));
+                theta = 0; 
+            }
         };
         controls.GravityControl.LockPlanetB.performed += _ =>
         {
-            locked = true;
-            planet = planets[1];
-            dir0 = transform.position - planets[1].transform.position;
-            dir1 = Vector3.Cross(dir0, new Vector3(0, 0, 1));
-            theta = 0;
+            if (lockAbleB)
+            {
+                locked = true;
+                planet = planets[1];
+                dir0 = transform.position - planets[1].transform.position;
+                dir1 = Vector3.Cross(dir0, new Vector3(0, 0, 1));
+                theta = 0;
+            }
         };
         controls.GravityControl.LockPlanetA.canceled += _ => locked = false;
         controls.GravityControl.LockPlanetB.canceled += _ => locked = false;
@@ -65,6 +78,7 @@ public class Player : MonoBehaviour
             rigid2d.AddForce(netForce, ForceMode2D.Force);
             if (rigid2d.velocity.magnitude > 4.0f)
                 rigid2d.velocity = rigid2d.velocity.normalized * 4.0f;
+            myForce = netForce;
         }
         else
         {
@@ -72,17 +86,7 @@ public class Player : MonoBehaviour
             transform.position = vec2 +  Mathf.Cos(theta) * dir0 + Mathf.Sin(theta) * dir1; 
             theta += angularVelocity;
         }
-
     }
-
-    // todo: clean temporary code
-    //private void Update()
-    //{
-    //    var origin = planets[1].transform.position;
-    //    var dir = new Vector3(0.8f * Mathf.Cos(theta), 0.8f * Mathf.Sin(theta), 0.0f);
-    //    transform.position = origin + dir;
-    //    theta += 0.050f;
-    //}
 
     private void GameOver() 
     { 
