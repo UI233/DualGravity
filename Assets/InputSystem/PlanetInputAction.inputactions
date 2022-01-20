@@ -11,7 +11,8 @@
                     "id": "c372f89b-dfa6-4e7c-ab87-b853738521f0",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "PlanetB",
@@ -19,7 +20,26 @@
                     "id": "900e6bf8-9796-4c41-b8aa-ad20d779630a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LockPlanetA",
+                    "type": "Button",
+                    "id": "8d03919e-f415-4595-86a8-13ab61fb370c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LockPlanetB",
+                    "type": "Button",
+                    "id": "7d39641e-c546-4ef8-8b7e-920ae870ce20",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -176,6 +196,50 @@
                     "action": "PlanetB",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a157bc09-6743-4a27-ba2d-eb07ecc5a5a3",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockPlanetA",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c99e08a3-5f11-4150-86fc-b85b56c0a717",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockPlanetA",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1476e59d-1216-4bfe-85ed-66f93f538ee9",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockPlanetB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "53580d95-d6b4-4fbe-8a0b-869f812acc7d",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockPlanetB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
