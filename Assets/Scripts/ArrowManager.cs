@@ -9,6 +9,7 @@ public class ArrowManager : MonoBehaviour
     GameObject[] arrows;
     Canvas canvas;
     Camera mainCamera;
+    RectTransform canvasRect;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,7 @@ public class ArrowManager : MonoBehaviour
         arrows = new GameObject[2] { GameObject.Find("ArrowA"), GameObject.Find("ArrowB") };
         planets = new GameObject[2] { GameObject.Find("PlanetA"), GameObject.Find("PlanetB") };
         player = GameObject.FindGameObjectWithTag("Player");
+        canvasRect = canvas.GetComponent<RectTransform>();
     }
     private float lineIntersectionWithBox(Vector2 line, Vector2 box)
     {
@@ -67,21 +69,35 @@ public class ArrowManager : MonoBehaviour
             return t3 * line;
         return new Vector2(0.0f, 0.0f);
     }
+    // Check whether the planet is in camera.
+    bool isInView(GameObject obj)
+    {
+        var view = Camera.main.WorldToViewportPoint(obj.transform.position);
+        if (view.x > 0.0f && view.x <= 1.0f && view.y > 0.0f && view.y <= 1.0f)
+            return true;
+        else
+            return false;
+    }
     // Update is called once per frame
     void Update()
     {
-        var canvasRect = canvas.GetComponent<RectTransform>();
         for (int i = 0; i < planets.Length; ++i)
         {
-            float width = canvas.GetComponent<RectTransform>().rect.width;
-            float height = canvas.GetComponent<RectTransform>().rect.height;
-            var dir = (planets[i].transform.position - player.transform.position).normalized;
-            var posInRect = lineIntersectionWithBounding(dir);
-            if (posInRect.sqrMagnitude != 0.0f)
+            if (!isInView(planets[i]))
             {
-                var rect = arrows[i].GetComponent<RectTransform>();
-                rect.anchoredPosition = new Vector2(posInRect.x * width / 2, posInRect.y * height / 2);
+                arrows[i].SetActive(true);
+                float width = canvas.GetComponent<RectTransform>().rect.width;
+                float height = canvas.GetComponent<RectTransform>().rect.height;
+                var dir = (planets[i].transform.position - player.transform.position).normalized;
+                var posInRect = lineIntersectionWithBounding(dir);
+                if (posInRect.sqrMagnitude != 0.0f)
+                {
+                    var rect = arrows[i].GetComponent<RectTransform>();
+                    rect.anchoredPosition = new Vector2(posInRect.x * width / 2, posInRect.y * height / 2);
+                }
             }
+            else
+                arrows[i].SetActive(false);
         }
         
     }
