@@ -22,7 +22,7 @@ public class NetForceIndicator : MonoBehaviour
     {
         float eps = 1e-3f;
         Vector2 dir = player.myForce.normalized;
-        if (dir.sqrMagnitude < eps)
+        if (dir.sqrMagnitude < eps || player.locked)
             rect.localScale = new Vector3(0.0f, 0.0f, 0.0f);
         else
         {

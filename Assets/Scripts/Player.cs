@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     private GameObject[] planets;
     private Rigidbody2D rigid2d;
     private CircleCollider2D collider;
-    private bool locked;
+    public bool locked;
     public Vector2 myForce { get; set; }
 
     private void Awake()
@@ -63,7 +63,6 @@ public class Player : MonoBehaviour
         rigid2d = GetComponent<Rigidbody2D>();
         collider = GetComponent<CircleCollider2D>();
     }
-
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -86,6 +85,10 @@ public class Player : MonoBehaviour
             transform.position = vec2 +  Mathf.Cos(theta) * dir0 + Mathf.Sin(theta) * dir1; 
             theta += angularVelocity;
         }
+        // Align Velocity
+        var dir = rigid2d.velocity.normalized;
+        float angle = Mathf.Atan2(-dir.x, dir.y) * 360.0f / (2.0f * Mathf.PI);
+        transform.eulerAngles = new Vector3(0.0f, 0.0f, angle);
     }
 
     private void GameOver() 
