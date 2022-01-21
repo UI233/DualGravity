@@ -53,20 +53,33 @@ public class ArrowManager : MonoBehaviour
             return true;
         return false;
     }
-    private Vector2 lineIntersectionWithBounding(Vector2 line)
+    private Vector2 lineIntersectionWithBounding(Vector2 line, out int index)
     {
         float t0 = lineIntersectionWithBox(line, new Vector2(0.0f, 1.0f));
         float t1 = lineIntersectionWithBox(line, new Vector2(0.0f, -1.0f));
         float t2 = lineIntersectionWithBox(line, new Vector2(1.0f, 0.0f));
         float t3 = lineIntersectionWithBox(line, new Vector2(-1.0f, 0.0f));
         if (t0 > 0.0f && isInBox(t0 * line))
+        {
+            index = 0;
             return t0 * line;
+        }
         else if (t1 > 0.0f && isInBox(t1 * line))
+        {
+            index = 1;
             return t1 * line;
+        }
         else if (t2 > 0.0f && isInBox(t2 * line))
+        {
+            index = 2;
             return t2 * line;
+        }
         else if (t3 > 0.0f && isInBox(t3 * line))
+        {
+            index = 3;
             return t3 * line;
+        }
+        index = -1;
         return new Vector2(0.0f, 0.0f);
     }
     // Check whether the planet is in camera.
@@ -89,11 +102,29 @@ public class ArrowManager : MonoBehaviour
                 float width = canvas.GetComponent<RectTransform>().rect.width;
                 float height = canvas.GetComponent<RectTransform>().rect.height;
                 var dir = (planets[i].transform.position - player.transform.position).normalized;
-                var posInRect = lineIntersectionWithBounding(dir);
+                int index = -1;
+                var posInRect = lineIntersectionWithBounding(dir, out index);
+
                 if (posInRect.sqrMagnitude != 0.0f)
                 {
                     var rect = arrows[i].GetComponent<RectTransform>();
                     rect.anchoredPosition = new Vector2(posInRect.x * width / 2, posInRect.y * height / 2);
+                    if (index == 0)
+                    {
+                        rect.eulerAngles = new Vector3(0, 0, 90);
+                    }
+                    else if (index == 1)
+                    {
+                        rect.eulerAngles = new Vector3(0, 0, -90);
+                    }
+                    else if (index == 2)
+                    {
+                        rect.eulerAngles = new Vector3(0, 0, 0);
+                    }
+                    else if (index == 3)
+                    {
+                        rect.eulerAngles = new Vector3(0, 0, 180);
+                    }
                 }
             }
             else
