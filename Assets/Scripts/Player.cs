@@ -25,10 +25,11 @@ public class Player : MonoBehaviour
     }
     // control the orbit of the Player
     private float theta;
+    private float lockTime;
     private Vector2 dir0;
     private Vector2 dir1;
     private GameObject planet;
-    public float angularVelocity = 0.05f;
+    public float lockTimePerCircle;
     public bool lockAbleA;
     public bool lockAbleB;
     // Start is called before the first frame update
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
                 dir0 = transform.position - planets[0].transform.position;
                 dir1 = Vector3.Cross(dir0, new Vector3(0, 0, 1));
                 theta = 0; 
+                lockTime = 0.0f;
             }
         };
         controls.GravityControl.LockPlanetB.performed += _ =>
@@ -55,6 +57,7 @@ public class Player : MonoBehaviour
                 dir0 = transform.position - planets[1].transform.position;
                 dir1 = Vector3.Cross(dir0, new Vector3(0, 0, 1));
                 theta = 0;
+                lockTime = 0.0f;
             }
         };
         controls.GravityControl.LockPlanetA.canceled += _ => locked = false;
@@ -62,6 +65,17 @@ public class Player : MonoBehaviour
         planets = GameObject.FindGameObjectsWithTag("Planet");
         rigid2d = GetComponent<Rigidbody2D>();
         collider = GetComponent<CircleCollider2D>();
+    }
+    private float GetAngular(float time)
+    {
+        float angle;
+        time /= lockTimePerCircle;
+        time %= 2.0f;
+        if (time >= 0.0f && time < 1.0f)
+            angle = time * time;
+        else
+            angle = 2.0f - (time - 2.0f) * (time - 2.0f);
+        return Mathf.PI * angle;
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -78,17 +92,17 @@ public class Player : MonoBehaviour
             if (rigid2d.velocity.magnitude > 4.0f)
                 rigid2d.velocity = rigid2d.velocity.normalized * 4.0f;
             myForce = netForce;
+            var dir = rigid2d.velocity.normalized;
+            float angle = Mathf.Atan2(-dir.x, dir.y) * 360.0f / (2.0f * Mathf.PI);
+            transform.eulerAngles = new Vector3(0.0f, 0.0f, angle);
         }
         else
         {
             var vec2 = new Vector2(planet.transform.position.x, planet.transform.position.y);
+            theta = GetAngular(lockTime);
             transform.position = vec2 +  Mathf.Cos(theta) * dir0 + Mathf.Sin(theta) * dir1; 
-            theta += angularVelocity;
+            lockTime += Time.fixedDeltaTime;
         }
-        // Align Velocity
-        var dir = rigid2d.velocity.normalized;
-        float angle = Mathf.Atan2(-dir.x, dir.y) * 360.0f / (2.0f * Mathf.PI);
-        transform.eulerAngles = new Vector3(0.0f, 0.0f, angle);
     }
 
     private void GameOver() 

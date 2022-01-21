@@ -7,7 +7,8 @@ public abstract class Planet : MonoBehaviour
     // helper
     // Defination of the trail
     public Vector3 center;
-    public float radius;
+    public float radiusA;
+    public float radiusB;
     public float angularVelocity;
     public PlanetInputAction controls;
     private float currentAngle;
@@ -38,8 +39,8 @@ public abstract class Planet : MonoBehaviour
     {
         currentAngle += angularVelocity * Time.deltaTime % 360.0f;
         float theta = currentAngle / 360.0f * 2.0f * Mathf.PI;
-        Vector3 pos = new Vector3(center.x + Mathf.Cos(theta) * radius, 
-                                  center.y + Mathf.Sin(theta) * radius, 
+        Vector3 pos = new Vector3(center.x + Mathf.Cos(theta) * radiusA, 
+                                  center.y + Mathf.Sin(theta) * radiusB, 
                                   transform.position.z);
         transform.position = pos;
     }

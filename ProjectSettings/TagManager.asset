@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Planet
   - Arrow
+  - Item
   layers:
   - Default
   - TransparentFX
