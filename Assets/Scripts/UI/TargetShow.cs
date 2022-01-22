@@ -6,19 +6,43 @@ using UnityEngine.UI;
 public class TargetShow : MonoBehaviour
 {
     [SerializeField]
-    Texture2D blueStone;
+    Sprite blueStone;
     [SerializeField]
-    Texture2D redStone;
+    Sprite redStone;
 
     [SerializeField]
-    Image image1;
+    Image[] image;
+
     [SerializeField]
-    Image image2;
-    [SerializeField]
-    Image image3;
+    Player player;
 
     private void Update()
     {
-        
+        for (int i = 0; i < player.targetBonus.Length; i++)
+        {
+            if (player.targetBonus[i] == 0) // blue 
+            {
+                image[i].sprite = blueStone;
+            }
+            else
+            {
+                image[i].sprite = redStone;
+            }
+        }
+
+        if (player.currentBonus.Count == 0)
+        {
+            for (int i = 0; i < player.targetBonus.Length; i++)
+            {
+                image[i].enabled = true;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < player.currentBonus.Count; i++)
+            {
+                image[i].enabled = false;
+            }
+        }
     }
 }

@@ -27,8 +27,8 @@ public class Player : MonoBehaviour
     // bonus effect
     [SerializeField]
     private int combo;
-    private List<int> currentBonus;
-    private int[] targetBonus;
+    public List<int> currentBonus;
+    public int[] targetBonus;
     // player's statistics
     [SerializeField]
     public float currentEnergy;
