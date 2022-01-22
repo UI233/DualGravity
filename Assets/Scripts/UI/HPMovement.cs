@@ -15,8 +15,8 @@ public class HPMovement : MonoBehaviour
     Sprite IntackEnergyBall;
     [SerializeField]
     float speed;
-    [SerializeField]
-    int healthLevel;  // 0 -- 10
+
+    //int healthLevel;  // 0 -- 10
     [SerializeField]
     int batteryNum;
     [SerializeField]
@@ -28,16 +28,23 @@ public class HPMovement : MonoBehaviour
     [SerializeField]
     GameObject battery4;
 
+    [SerializeField]
+    Player player;
+
+    bool lastFractureState;
+
     private void Start()
     {
-        healthLevel = 10;
+        //healthLevel = 10;
         batteryNum = 4;
+        lastFractureState = false;
     }
 
     private void Update()
     {
         UpdateHP();
         UpdateBatteryNum();
+        UpdateFracture();
     }
 
     void UpdateHP()
@@ -54,11 +61,12 @@ public class HPMovement : MonoBehaviour
         // Vertical
         //Debug.Log(energy.rectTransform.position.y);
         energy.rectTransform.position = new Vector3(energy.rectTransform.position.x,
-            0 + healthLevel * 10, energy.rectTransform.position.z);
+            0 + 100 * (player.currentEnergy - Mathf.FloorToInt(player.currentEnergy)), energy.rectTransform.position.z);
     }
 
     void UpdateBatteryNum()
     {
+        batteryNum = Mathf.FloorToInt(player.currentEnergy - 1e-4f);
         switch (batteryNum)
         {
             case 0:
@@ -91,6 +99,8 @@ public class HPMovement : MonoBehaviour
                 battery3.SetActive(true);
                 battery4.SetActive(true);
                 break;
+            default:
+                break;
         }
     }
 
@@ -104,17 +114,46 @@ public class HPMovement : MonoBehaviour
 
     }
 
-    public void SwitchEnergyBall()
+    void UpdateFracture()
     {
-        if (energyBall.sprite == IntackEnergyBall)
+        //if (lastFractureState)
+        //{
+        //    energyBall.sprite = BrokenEnergyBall;
+        //    energyBall.color = new Color(0.8f, 0, 0);
+        //}
+        //else
+        //{
+        //    energyBall.sprite = BrokenEnergyBall;
+        //    energyBall.color = new Color(0.8f, 0, 0);
+        //}
+        if (player.fractured != lastFractureState)
         {
-            energyBall.sprite = BrokenEnergyBall;
-            energyBall.color = new Color(0.8f, 0, 0);
+            if (lastFractureState)
+            {
+                energyBall.sprite = IntackEnergyBall;
+                energyBall.color = new Color(1, 1, 1);
+            }
+            else
+            {
+                energyBall.sprite = BrokenEnergyBall;
+                energyBall.color = new Color(0.8f, 0, 0);
+            }
         }
-        else
-        {
-            energyBall.sprite = IntackEnergyBall;
-            energyBall.color = new Color(1, 1, 1);
-        }
-    }
+
+        lastFractureState = player.fractured;
+    } 
+
+    //public void SwitchEnergyBall()
+    //{
+    //    if (energyBall.sprite == IntackEnergyBall)
+    //    {
+    //        energyBall.sprite = BrokenEnergyBall;
+    //        energyBall.color = new Color(0.8f, 0, 0);
+    //    }
+    //    else
+    //    {
+    //        energyBall.sprite = IntackEnergyBall;
+    //        energyBall.color = new Color(1, 1, 1);
+    //    }
+    //}
 }

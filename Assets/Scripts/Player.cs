@@ -31,9 +31,9 @@ public class Player : MonoBehaviour
     private int[] targetBonus;
     // player's statistics
     [SerializeField]
-    private float currentEnergy;
+    public float currentEnergy;
     [SerializeField]
-    private bool fractured;
+    public bool fractured;
     [SerializeField]
     private float fragileCountDown;
     private void Awake()
@@ -215,7 +215,7 @@ public class Player : MonoBehaviour
     {
         for (; ; )
         {
-            Debug.Log("enegy:" + currentEnergy);
+            //Debug.Log("enegy:" + currentEnergy);
             yield return new WaitForSeconds(lossInterval);
             currentEnergy -= lossAmount;
         }
