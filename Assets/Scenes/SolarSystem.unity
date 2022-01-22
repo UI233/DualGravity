@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 0
-  lockTimePerCircle: 0.5
+  angularVelocity: 5
   lockAbleA: 0
   lockAbleB: 0
 --- !u!50 &101928359

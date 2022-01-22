@@ -25,14 +25,31 @@ public class Player : MonoBehaviour
     }
     // control the orbit of the Player
     private float theta;
-    private float lockTime;
     private Vector2 dir0;
     private Vector2 dir1;
     private GameObject planet;
-    public float lockTimePerCircle;
+    public float angularVelocity;
     public bool lockAbleA;
     public bool lockAbleB;
-    // Start is called before the first frame update
+    private float GetAngularVelocity(float angle)
+    {
+        angle /= Mathf.PI;
+        angle %= 2.0f;
+        float velocity;
+        if (angle >= 0.0f && angle < 1.0f)
+            velocity =  2.0f * Mathf.Sqrt(angle);
+        else if (angle < 2.0f)
+            velocity = 2.0f * Mathf.Sqrt(2.0f - angle);
+        else
+            velocity = 0.0f;
+        // avoid stucking in the singularity
+        const float eps = 1e-4f;
+        if (velocity < eps)
+            velocity = eps;
+        return velocity;
+    }
+
+   // Start is called before the first frame update
     void Start()
     {
         controls.GravityControl.LockPlanetA.performed += _ =>
@@ -42,10 +59,12 @@ public class Player : MonoBehaviour
                 // initialize locking variables
                 locked = true;
                 planet = planets[0];
-                dir0 = transform.position - planets[0].transform.position;
-                dir1 = Vector3.Cross(dir0, new Vector3(0, 0, 1));
-                theta = 0; 
-                lockTime = 0.0f;
+                float radius = (transform.position - planet.transform.position).magnitude;
+                dir0 = new Vector3(0.0f, radius, 0.0f);
+                dir1 = new Vector3(-radius, 0.0f, 0.0f);
+                // todo: make the apex be slowest point 
+                Vector3 dir = (transform.position - planet.transform.position).normalized;
+                theta = Mathf.Atan2(-dir.x, dir.y) + 2.0f * Mathf.PI;
             }
         };
         controls.GravityControl.LockPlanetB.performed += _ =>
@@ -54,10 +73,12 @@ public class Player : MonoBehaviour
             {
                 locked = true;
                 planet = planets[1];
-                dir0 = transform.position - planets[1].transform.position;
-                dir1 = Vector3.Cross(dir0, new Vector3(0, 0, 1));
-                theta = 0;
-                lockTime = 0.0f;
+                float radius = (transform.position - planet.transform.position).magnitude;
+                dir0 = new Vector3(0.0f, radius, 0.0f);
+                dir1 = new Vector3(-radius, 0.0f, 0.0f);
+                // todo: make the apex be slowest point 
+                Vector3 dir = (transform.position - planet.transform.position).normalized;
+                theta = Mathf.Atan2(-dir.x, dir.y) + 2.0f * Mathf.PI;
             }
         };
         controls.GravityControl.LockPlanetA.canceled += _ => locked = false;
@@ -66,17 +87,7 @@ public class Player : MonoBehaviour
         rigid2d = GetComponent<Rigidbody2D>();
         collider = GetComponent<CircleCollider2D>();
     }
-    private float GetAngular(float time)
-    {
-        float angle;
-        time /= lockTimePerCircle;
-        time %= 2.0f;
-        if (time >= 0.0f && time < 1.0f)
-            angle = time * time;
-        else
-            angle = 2.0f - (time - 2.0f) * (time - 2.0f);
-        return Mathf.PI * angle;
-    }
+    
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -99,9 +110,8 @@ public class Player : MonoBehaviour
         else
         {
             var vec2 = new Vector2(planet.transform.position.x, planet.transform.position.y);
-            theta = GetAngular(lockTime);
+            theta += GetAngularVelocity(theta) * Time.fixedDeltaTime * angularVelocity;
             transform.position = vec2 +  Mathf.Cos(theta) * dir0 + Mathf.Sin(theta) * dir1; 
-            lockTime += Time.fixedDeltaTime;
         }
     }
 
