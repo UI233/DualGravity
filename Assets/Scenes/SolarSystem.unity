@@ -514,6 +514,7 @@ GameObject:
   - component: {fileID: 222267976}
   - component: {fileID: 222267973}
   - component: {fileID: 222267977}
+  - component: {fileID: 222267978}
   m_Layer: 6
   m_Name: PlanetA
   m_TagString: Planet
@@ -621,6 +622,7 @@ MonoBehaviour:
   radiusB: 5.867
   angularVelocity: 20
   initialAngle: 0
+  anim: {fileID: 0}
   gm: 0
   inputScale: 0.25
 --- !u!58 &222267977
@@ -639,6 +641,25 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3.2
+--- !u!95 &222267978
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222267972}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f833c22221ac98c44955f96f0eeadeed, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &287416079
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,7 +2434,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.1178284, y: 0.8548126}
+  m_Offset: {x: -1.1178274, y: 0.04246235}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2424,7 +2445,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 36.105446, y: 20.462757}
+  m_Size: {x: 38.660545, y: 26.30607}
   m_EdgeRadius: 0
 --- !u!114 &880307795
 MonoBehaviour:
@@ -3415,6 +3436,7 @@ GameObject:
   - component: {fileID: 1689163917}
   - component: {fileID: 1689163914}
   - component: {fileID: 1689163918}
+  - component: {fileID: 1689163919}
   m_Layer: 6
   m_Name: PlanetB
   m_TagString: Planet
@@ -3522,6 +3544,7 @@ MonoBehaviour:
   radiusB: 12.47
   angularVelocity: 24
   initialAngle: 0
+  anim: {fileID: 0}
   gm: 0
   inputScale: 0.25
 --- !u!58 &1689163918
@@ -3540,6 +3563,25 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3.2
+--- !u!95 &1689163919
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689163913}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9aa1dfb388408a34ab14ca24e97febf4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1703531517
 GameObject:
   m_ObjectHideFlags: 0

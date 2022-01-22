@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2154669519623186812}
   - component: {fileID: 4821447579482893519}
   - component: {fileID: -53906773278659106}
+  - component: {fileID: 1213390259}
   m_Layer: 0
   m_Name: Bonus0
   m_TagString: Item
@@ -113,4 +114,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8243df5a5aec653449c82962fd819796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 0}
   bonusType: 0
+--- !u!95 &1213390259
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4629314616125024307}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 92aa2763dbab1b34ba5a73622bf4fa3a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

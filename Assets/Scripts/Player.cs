@@ -93,6 +93,7 @@ public class Player : MonoBehaviour
                 theta = Mathf.Atan2(-dir.x, dir.y) + 2.0f * Mathf.PI;
                 anim.enabled = true;
                 anim.SetBool("SelfRotation", true);
+                planet.GetComponent<Planet>().SetLock(true);
             }
         };
         controls.GravityControl.LockPlanetB.performed += _ =>
@@ -109,17 +110,20 @@ public class Player : MonoBehaviour
                 theta = Mathf.Atan2(-dir.x, dir.y) + 2.0f * Mathf.PI;
                 anim.enabled = true;
                 anim.SetBool("SelfRotation", true);
+                planet.GetComponent<Planet>().SetLock(true);
             }
         };
         controls.GravityControl.LockPlanetA.canceled += _ => {
             locked = false;
             anim.SetBool("SelfRotation", false);
             anim.enabled = false;
+            planet.GetComponent<Planet>().SetLock(false);
         };
         controls.GravityControl.LockPlanetB.canceled += _ => {
             locked = false;
             anim.SetBool("SelfRotation", false);
             anim.enabled = false;
+            planet.GetComponent<Planet>().SetLock(false);
         };
     }
     private void GetMyComponents()
@@ -269,6 +273,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Planet")
         {
+            collision.gameObject.GetComponent<Planet>().SetCollid();
             GameOver();
         }
 

@@ -28,12 +28,18 @@ public class PlanetB : Planet
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
+        {
             collision.gameObject.GetComponent<Player>().lockAbleB = true;
+            SetNear(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")
+        {
             collision.gameObject.GetComponent<Player>().lockAbleB = false;
+            SetNear(false);
+        }
     }
 }

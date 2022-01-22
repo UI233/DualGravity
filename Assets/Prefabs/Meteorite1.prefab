@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4742662669903482232}
   - component: {fileID: 5703458110431856071}
   - component: {fileID: -2670140895453745363}
+  - component: {fileID: 2305776441749779504}
   m_Layer: 0
   m_Name: Meteorite1
   m_TagString: Meteorite
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5293663992277462108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.7521, y: -0.3021, z: 0}
-  m_LocalScale: {x: 0.154752, y: 0.154752, z: 0.154752}
+  m_LocalScale: {x: 0.39085177, y: 0.39085177, z: 0.39085177}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -114,3 +115,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
+--- !u!95 &2305776441749779504
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5293663992277462108}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aad1cec4f5c40f848a2312330fe4e00c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

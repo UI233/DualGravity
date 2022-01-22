@@ -14,6 +14,7 @@ public abstract class Planet : MonoBehaviour
     private float currentAngle;
     public float initialAngle;
     private Vector3 latePosition;
+    public Animator anim;
     // Force property of this object
     public float gm;
     public float inputScale;
@@ -32,6 +33,7 @@ public abstract class Planet : MonoBehaviour
         currentAngle = 0.0f;
         latePosition = transform.position;
         currentAngle = initialAngle;
+        anim = GetComponent<Animator>();
     }
     
     // functions called oer update
@@ -70,4 +72,19 @@ public abstract class Planet : MonoBehaviour
             return new Vector2(0.0f, 0.0f);
         return inputScale * gm * diff2d / diff2d.sqrMagnitude;
     }
-}
+
+    public void SetLock(bool value)
+    {
+        anim.SetBool("Lock", value);
+    }
+
+    public void SetNear(bool value)
+    {
+        anim.SetBool("Near", value);
+    }
+
+    public void SetCollid()
+    {
+        anim.SetTrigger("Collide");
+    }
+ }
