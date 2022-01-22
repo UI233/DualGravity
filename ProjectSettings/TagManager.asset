@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Meteorite
   - Manager
+  - Lighting
   layers:
   - Default
   - TransparentFX

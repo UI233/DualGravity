@@ -1545,7 +1545,7 @@ GameObject:
   - component: {fileID: 639568312}
   - component: {fileID: 639568311}
   m_Layer: 0
-  m_Name: Light 2D
+  m_Name: AmbientLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1568,7 +1568,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.7
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -3738,8 +3738,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rClean: 20
   rMin: 1.5
-  rMax: 10
-  maxCount: 10
+  rMax: 12
+  maxCount: 5
   spawnSpeed: 0.5
   _prefab:
   - {fileID: 2997421468580372680, guid: 7b33d9229faa5e745b8c8330cd3e7227, type: 3}
@@ -3793,7 +3793,7 @@ MonoBehaviour:
   rClean: 10
   rMin: 1
   rMax: 5
-  maxCount: 10
+  maxCount: 12
   spawnSpeed: 2
   _prefab:
   - {fileID: 4629314616125024307, guid: ab8f425cf03844f45a9a8878e774c89a, type: 3}

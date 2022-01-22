@@ -17,6 +17,11 @@ abstract public class Item : MonoBehaviour
     {
         
     }
+    
+    public void Appear()
+    {
+        
+    }
     public void Disapear()
     {
         manager.GetComponent<ItemManager>().Recycle(gameObject);
