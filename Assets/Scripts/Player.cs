@@ -111,7 +111,8 @@ public class Player : MonoBehaviour
         {
             var vec2 = new Vector2(planet.transform.position.x, planet.transform.position.y);
             theta += GetAngularVelocity(theta) * Time.fixedDeltaTime * angularVelocity;
-            transform.position = vec2 +  Mathf.Cos(theta) * dir0 + Mathf.Sin(theta) * dir1; 
+            vec2 = vec2 +  Mathf.Cos(theta) * dir0 + Mathf.Sin(theta) * dir1;
+            transform.position = new Vector3(vec2.x, vec2.y, transform.position.z);
         }
     }
 
