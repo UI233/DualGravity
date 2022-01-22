@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SolarSystem.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Start.unity
+    guid: 28c62a3f7de98b142b38957b788f1510
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f1b64b4240ec06f49bb765bf3897d70b, type: 2}

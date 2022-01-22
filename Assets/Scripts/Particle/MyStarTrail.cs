@@ -37,7 +37,7 @@ public class MyStarTrail : MonoBehaviour
         if (Time.time - timer > spawnTime)
         {
             GameObject g = Instantiate(stars[Random.Range(0, 6)], transform);
-            g.transform.position = player.transform.position;
+            g.transform.position = player.transform.position + new Vector3(0, 0, 1);
             timer = Time.time;
         }
     }
