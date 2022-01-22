@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     // helper component
     public MeteoriteManager manager;
     // energy loss parameters
+    public float itemBonus;
     public float lossInterval;
     public float lossAmount;
     public float initialEnergy;
@@ -141,7 +142,6 @@ public class Player : MonoBehaviour
         if (maxCombo != comboBonus.Length)
             throw new System.IndexOutOfRangeException("Combo does not match");
         // Energy Loss
-        StartCoroutine(EnergyLoss());
     }
    // Start is called before the first frame update
     void Start()
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
         ConfigInput();
         GetMyComponents();
         InitPlayerState();
-
+        StartCoroutine(EnergyLoss());
     }
     
     // Update is called once per frame
@@ -191,7 +191,6 @@ public class Player : MonoBehaviour
             fragileCountDown -= Time.deltaTime;
             if (fragileCountDown < 1e-3f)
             {
-                Debug.Log("Recover!");
                 fractured = false;
             }
         }
@@ -203,12 +202,13 @@ public class Player : MonoBehaviour
             targetBonus[i] = Random.Range(0, 2);
     }
     // helper functions
-    private void GameOver() 
+    public void GameOver() 
     { 
         transform.position = new Vector3(0.0f, 0.0f, transform.position.z);
         transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
         rigid2d.angularVelocity = 0.0f;
         rigid2d.velocity = new Vector2(0.0f, 0.0f);
+        InitPlayerState();
     }
     // energy loss 
     private IEnumerator EnergyLoss()
@@ -224,11 +224,9 @@ public class Player : MonoBehaviour
     private void GetBonus()
     {
         bool equals = true;
-        for (int i = 0; i < currentBonus.Count; ++i)
-            equals &= (currentBonus[i] == targetBonus[i]);
         if (equals)
         {
-            currentEnergy = Mathf.Max(comboBonus[combo] + currentEnergy, energyLimit);
+            currentEnergy = Mathf.Min(comboBonus[combo] + currentEnergy, energyLimit);
             ++combo;
             if (combo == maxCombo)
             {
@@ -244,7 +242,14 @@ public class Player : MonoBehaviour
     private void GetItem(int id)
     {
         currentBonus.Add(id);
-        if (currentBonus.Count == bonusBufferSize)
+        currentEnergy = Mathf.Min(currentEnergy + itemBonus, energyLimit);
+        if (currentBonus[currentBonus.Count - 1] != targetBonus[currentBonus.Count - 1])
+        {
+            combo = 0;
+            currentBonus.Clear();
+            GenerateTargetBonus();
+        }    
+        else if (currentBonus.Count == bonusBufferSize)
             GetBonus();
     }
     private void TakeDamage()
@@ -256,7 +261,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("Damaged");
             fragileCountDown = fragileTime;
             fractured = true;
         }
