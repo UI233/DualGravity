@@ -56,7 +56,8 @@ public class Player : MonoBehaviour
     private Vector2 dir1;
     private GameObject planet;
     public float angularVelocity;
-    //public float selfRotationVelocity;
+    public float selfRotationVelocity;
+    private float selfRotationTheta;
     public bool lockAbleA;
     public bool lockAbleB;
     private float GetAngularVelocity(float angle)
@@ -91,9 +92,10 @@ public class Player : MonoBehaviour
                 // todo: make the apex be slowest point 
                 Vector3 dir = (transform.position - planet.transform.position).normalized;
                 theta = Mathf.Atan2(-dir.x, dir.y) + 2.0f * Mathf.PI;
-                anim.enabled = true;
-                anim.SetBool("SelfRotation", true);
+                // anim.enabled = true;
+                anim.SetBool("Lock", true);
                 planet.GetComponent<Planet>().SetLock(true);
+                selfRotationTheta = 0.0f;
             }
         };
         controls.GravityControl.LockPlanetB.performed += _ =>
@@ -108,21 +110,22 @@ public class Player : MonoBehaviour
                 // todo: make the apex be slowest point 
                 Vector3 dir = (transform.position - planet.transform.position).normalized;
                 theta = Mathf.Atan2(-dir.x, dir.y) + 2.0f * Mathf.PI;
-                anim.enabled = true;
-                anim.SetBool("SelfRotation", true);
+                // anim.enabled = true;
+                anim.SetBool("Lock", true);
                 planet.GetComponent<Planet>().SetLock(true);
+                selfRotationTheta = 0.0f;
             }
         };
         controls.GravityControl.LockPlanetA.canceled += _ => {
             locked = false;
-            anim.SetBool("SelfRotation", false);
-            anim.enabled = false;
+            anim.SetBool("Lock", false);
+            // anim.enabled = false;
             planet.GetComponent<Planet>().SetLock(false);
         };
         controls.GravityControl.LockPlanetB.canceled += _ => {
             locked = false;
-            anim.SetBool("SelfRotation", false);
-            anim.enabled = false;
+            anim.SetBool("Lock", false);
+            // anim.enabled = false;
             planet.GetComponent<Planet>().SetLock(false);
         };
     }
@@ -131,7 +134,7 @@ public class Player : MonoBehaviour
         rigid2d = GetComponent<Rigidbody2D>();
         collider = GetComponent<CircleCollider2D>();
         anim = GetComponent<Animator>();
-        anim.enabled = false;
+        //anim.enabled = false;
     }
     private void InitPlayerState()
     {
@@ -182,8 +185,8 @@ public class Player : MonoBehaviour
             vec2 = vec2 +  Mathf.Cos(theta) * dir0 + Mathf.Sin(theta) * dir1;
             transform.position = new Vector3(vec2.x, vec2.y, transform.position.z);
             theta += GetAngularVelocity(theta) * Time.fixedDeltaTime * angularVelocity;
-            // transform.eulerAngles = new Vector3(0.0f, 0.0f, selfRotationTheta);
-            // selfRotationTheta += Time.fixedDeltaTime * selfRotationVelocity;
+            transform.eulerAngles = new Vector3(0.0f, 0.0f, selfRotationTheta);
+            selfRotationTheta += Time.fixedDeltaTime * selfRotationVelocity;
         }
     }
 
@@ -232,6 +235,7 @@ public class Player : MonoBehaviour
         {
             currentEnergy = Mathf.Min(comboBonus[combo] + currentEnergy, energyLimit);
             ++combo;
+            anim.SetTrigger("Combo");
             if (combo == maxCombo)
             {
                 manager.DestroyAllMeteorites();
@@ -249,12 +253,15 @@ public class Player : MonoBehaviour
         currentEnergy = Mathf.Min(currentEnergy + itemBonus, energyLimit);
         if (currentBonus[currentBonus.Count - 1] != targetBonus[currentBonus.Count - 1])
         {
+            anim.SetTrigger("Dis");
             combo = 0;
             currentBonus.Clear();
             GenerateTargetBonus();
-        }    
+        }
         else if (currentBonus.Count == bonusBufferSize)
             GetBonus();
+        else
+            anim.SetTrigger("Happy");
     }
     private void TakeDamage()
     {
@@ -279,6 +286,7 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.tag == "Meteorite")
         {
+            anim.SetTrigger("Hit");
             TakeDamage();
             collision.gameObject.GetComponent<Item>().Disapear();
         }
