@@ -39,7 +39,8 @@ public class MeteoriteManager : MonoBehaviour
     {
         float radius = Random.Range(rMin, rMax);
         float theta = Random.Range(0.0f, Mathf.PI * 2.0f);
-        Vector2 pos = radius * new Vector2(Mathf.Cos(theta), Mathf.Sin(theta));
+        Vector2 pos = radius * new Vector2(Mathf.Cos(theta), Mathf.Sin(theta))
+                    + new Vector2(player.transform.position.x, player.transform.position.y);
         GameObject meteorite = null;
         // return from object pool
         if (objectsPool.Count != 0)
@@ -61,7 +62,7 @@ public class MeteoriteManager : MonoBehaviour
     {
         for (; ; )
         {
-            if (activePool.Count > maxCount)
+            if (activePool.Count >= maxCount)
             {
                 foreach (var obj in activePool.FindAll(elem => (elem.transform.position - player.transform.position).magnitude > rClean))
                     DisableObject(obj);
