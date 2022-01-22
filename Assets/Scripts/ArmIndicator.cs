@@ -20,6 +20,7 @@ public class ArmIndicator : MonoBehaviour
     {
         var dir = player.myForce.normalized;
         float angle = Mathf.Atan2(-dir.x, dir.y) * 360.0f / (2.0f * Mathf.PI);
-        transform.localEulerAngles = new Vector3(0.0f, 0.0f, angle) - transform.parent.eulerAngles;
+        transform.localEulerAngles = new Vector3(0.0f, 0.0f, angle);
+        transform.position = player.transform.position;
     }
 }
