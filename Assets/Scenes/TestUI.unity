@@ -703,9 +703,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueStone: {fileID: 2800000, guid: 096b5c55abae48a4a9b79ece6ff436be, type: 3}
   redStone: {fileID: 2800000, guid: 4a9fc3d6dbb85724e8454833d67537ea, type: 3}
-  image1: {fileID: 702297621}
-  image2: {fileID: 65652019}
-  image3: {fileID: 1983685330}
+  image: []
+  player: {fileID: 0}
 --- !u!1 &1008342244
 GameObject:
   m_ObjectHideFlags: 0
@@ -6392,12 +6391,12 @@ MonoBehaviour:
   BrokenEnergyBall: {fileID: 21300000, guid: 7a9d1a43e6665a34c8d0a7ff874e8cac, type: 3}
   IntackEnergyBall: {fileID: 21300000, guid: 37ac038f7f6a48642a45767a9e427dd7, type: 3}
   speed: 100
-  healthLevel: 0
   batteryNum: 0
   battery1: {fileID: 1548052965}
   battery2: {fileID: 67456034}
   battery3: {fileID: 1690411679}
   battery4: {fileID: 2135811036}
+  player: {fileID: 0}
 --- !u!1 &2135811036
 GameObject:
   m_ObjectHideFlags: 0
