@@ -14,6 +14,7 @@ public class MeteoriteManager : MonoBehaviour
     public GameObject _prefab;
     public GameObject player;
     private float spawnNum;
+    public float depth;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,7 @@ public class MeteoriteManager : MonoBehaviour
     void SpawnObject(GameObject meteorite, Vector3 initPos)
     {
         meteorite.SetActive(true);
+        initPos.z = depth;
         meteorite.transform.position = initPos;
     }
     void DisableObject(GameObject meteorite)
