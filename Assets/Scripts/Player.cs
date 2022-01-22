@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // my components
     private Animator anim;
     private GameObject[] planets;
     private Rigidbody2D rigid2d;
@@ -11,23 +12,34 @@ public class Player : MonoBehaviour
     public PlanetInputAction controls;
     public bool locked;
     public Vector2 myForce { get; set; }
+    // helper component
+    public MeteoriteManager manager;
     // energy loss parameters
     public float lossInterval;
     public float lossAmount;
     public float initialEnergy;
     public int bonusBufferSize;
     public float fragileTime;
+    public float energyLimit;
+    // reward parameter
+    public float[] comboBonus;
+    public int maxCombo;
     // bonus effect
+    [SerializeField]
     private int combo;
     private List<int> currentBonus;
-    public List<int> targetBonus;
+    private int[] targetBonus;
     // player's statistics
+    [SerializeField]
     private float currentEnergy;
+    [SerializeField]
     private bool fractured;
+    [SerializeField]
     private float fragileCountDown;
     private void Awake()
     {
         controls = new PlanetInputAction();
+        planets = GameObject.FindGameObjectsWithTag("Planet");
         Application.targetFrameRate = 60;
     }
     private void OnEnable()
@@ -43,7 +55,7 @@ public class Player : MonoBehaviour
     private Vector2 dir1;
     private GameObject planet;
     public float angularVelocity;
-    public float selfRotationVelocity;
+    //public float selfRotationVelocity;
     public bool lockAbleA;
     public bool lockAbleB;
     private float GetAngularVelocity(float angle)
@@ -63,11 +75,8 @@ public class Player : MonoBehaviour
             velocity = eps;
         return velocity;
     }
-
-   // Start is called before the first frame update
-    void Start()
+    private void ConfigInput()
     {
-        // configure input callbacks
         controls.GravityControl.LockPlanetA.performed += _ =>
         {
             if (lockAbleA)
@@ -111,19 +120,36 @@ public class Player : MonoBehaviour
             anim.SetBool("SelfRotation", false);
             anim.enabled = false;
         };
-        // initialize gameobject components
-        planets = GameObject.FindGameObjectsWithTag("Planet");
+    }
+    private void GetMyComponents()
+    {
         rigid2d = GetComponent<Rigidbody2D>();
         collider = GetComponent<CircleCollider2D>();
         anim = GetComponent<Animator>();
         anim.enabled = false;
+    }
+    private void InitPlayerState()
+    {
         // initialize players' states
         combo = 0;
         currentBonus = new List<int>();
-        targetBonus = new List<int>();
+        targetBonus = new int[bonusBufferSize];
         // player's statistics
         currentEnergy = initialEnergy;
         fractured = false;
+        GenerateTargetBonus();
+        if (maxCombo != comboBonus.Length)
+            throw new System.IndexOutOfRangeException("Combo does not match");
+        // Energy Loss
+        StartCoroutine(EnergyLoss());
+    }
+   // Start is called before the first frame update
+    void Start()
+    {
+        ConfigInput();
+        GetMyComponents();
+        InitPlayerState();
+
     }
     
     // Update is called once per frame
@@ -159,12 +185,22 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        // fragile state's recovery
         if (fractured)
         {
             fragileCountDown -= Time.deltaTime;
             if (fragileCountDown < 1e-3f)
+            {
+                Debug.Log("Recover!");
                 fractured = false;
+            }
         }
+    }
+
+    void GenerateTargetBonus()
+    {
+        for (int i = 0; i < bonusBufferSize; ++i)
+            targetBonus[i] = Random.Range(0, 2);
     }
     // helper functions
     private void GameOver() 
@@ -175,25 +211,16 @@ public class Player : MonoBehaviour
         rigid2d.velocity = new Vector2(0.0f, 0.0f);
     }
     // energy loss 
-    private IEnumerable EnergyLoss()
+    private IEnumerator EnergyLoss()
     {
         for (; ; )
         {
+            Debug.Log("enegy:" + currentEnergy);
             yield return new WaitForSeconds(lossInterval);
             currentEnergy -= lossAmount;
         }
 
     }
-    private void EnterFragileMode()
-    {
-        fractured = true;
-        fragileCountDown = fragileTime;
-    }
-    private void Reward(int combo)
-    {
-
-    }
-
     private void GetBonus()
     {
         bool equals = true;
@@ -201,18 +228,18 @@ public class Player : MonoBehaviour
             equals &= (currentBonus[i] == targetBonus[i]);
         if (equals)
         {
-            // get Bonus according to combo
-            Reward(combo);
+            currentEnergy = Mathf.Max(comboBonus[combo] + currentEnergy, energyLimit);
             ++combo;
+            if (combo == maxCombo)
+            {
+                manager.DestroyAllMeteorites();
+                combo = 0;
+            }
         }
         else
-        {
-            Reward(combo);
             combo = 0;
-        }
         currentBonus.Clear();
-        for (int i = 0; i < bonusBufferSize; ++i)
-            targetBonus[i] = Random.Range(0, 2);
+        GenerateTargetBonus();
     }
     private void GetItem(int id)
     {
@@ -224,12 +251,12 @@ public class Player : MonoBehaviour
     {
         if (fractured)
         {
-            int energyCount = (int)currentEnergy;
-            currentEnergy = Mathf.Floor(energyCount);
+            currentEnergy = Mathf.Floor(currentEnergy);
             fractured = false;
         }
         else
         {
+            Debug.Log("Damaged");
             fragileCountDown = fragileTime;
             fractured = true;
         }
@@ -244,11 +271,13 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Meteorite")
         {
             TakeDamage();
+            collision.gameObject.GetComponent<Item>().Disapear();
         }
 
         if (collision.gameObject.tag == "Item")
         {
-            
+            GetItem(collision.gameObject.GetComponent<BonusItem>().bonusType);
+            collision.gameObject.GetComponent<Item>().Disapear();
         }
     }
 }
