@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     // my components
     private Animator anim;
     [SerializeField]
+    private Animator shellAnim;
+    [SerializeField]
     private Animator superComboAnimator;
     private GameObject[] planets;
     private Rigidbody2D rigid2d;
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
     public int score;
     public float startTime;
     public float invincibleTime;
+    public float flashingTime;
     private float invincibleCountDown;
     private bool invincible;
     private void Awake()
@@ -228,6 +231,7 @@ public class Player : MonoBehaviour
 
     void DisableInvincible()
     {
+        shellAnim.SetBool("Flashing", false);
         InvincibleShell.SetActive(false);
         PlayerLight.SetActive(true);
         invincible = false;
@@ -256,6 +260,8 @@ public class Player : MonoBehaviour
         if (invincible)
         {
             invincibleCountDown -= Time.deltaTime;
+            if (invincibleCountDown < flashingTime)
+                shellAnim.SetBool("Flashing", true);
             if (invincibleCountDown < 1e-3f)
                 DisableInvincible();
         }

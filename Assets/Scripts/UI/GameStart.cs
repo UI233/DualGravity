@@ -10,15 +10,15 @@ public class GameStart : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("SolarSystem");
     }
 
-    private void OnMouseOver()
-    {
-        if ((int)Time.time % 2 == 0)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + 0.1f);
-        }
-        else
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z - 0.1f);
-        }
-    }
+    //private void OnMouseOver()
+    //{
+    //    if ((int)Time.time % 2 == 0)
+    //    {
+    //        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z + 0.1f);
+    //    }
+    //    else
+    //    {
+    //        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z - 0.1f);
+    //    }
+    //}
 }

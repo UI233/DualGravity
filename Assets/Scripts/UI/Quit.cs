@@ -9,4 +9,5 @@ public class Quit : MonoBehaviour
         Debug.Log("OnMouseDown");
         Application.Quit();
     }
+
 }
