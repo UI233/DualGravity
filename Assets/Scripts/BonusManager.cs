@@ -15,14 +15,14 @@ public class BonusManager : ItemManager
         while (!ok && maxTemp > 0)
         {
             --maxTemp;
-            bool achived = true;
+            bool achieved = true;
             foreach (var obj in activePool)
             {
-                achived &= ((obj.transform.position - initPos).magnitude > threshold);
+                achieved &= ((obj.transform.position - initPos).magnitude > threshold);
             }
-            if (!achived)
+            if (!achieved)
                 initPos = GetRandomPosition();
-            ok = achived;
+            ok = achieved;
         }
         item.transform.position = initPos;
     }
