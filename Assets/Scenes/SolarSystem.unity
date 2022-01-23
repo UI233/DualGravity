@@ -2522,7 +2522,7 @@ MonoBehaviour:
   manager: {fileID: 1787336403}
   itemBonus: 0.25
   lossInterval: 0.1
-  lossAmount: 0.013
+  lossAmount: 0.00625
   initialEnergy: 5
   bonusBufferSize: 3
   fragileTime: 10
@@ -9566,7 +9566,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10.541809, y: 0}
+  m_AnchoredPosition: {x: 10.541809, y: 98.79138}
   m_SizeDelta: {x: 1621.0835, y: 900}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1535897214
@@ -10704,7 +10704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rClean: 20
   rMin: 1.5
-  rMax: 12
+  rMax: 7
   maxCount: 5
   spawnSpeed: 0.5
   _prefab:
@@ -10757,7 +10757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rClean: 10
-  rMin: 1
+  rMin: 1.7
   rMax: 5
   maxCount: 5
   spawnSpeed: 5

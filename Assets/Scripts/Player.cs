@@ -263,8 +263,8 @@ public class Player : MonoBehaviour
         {
             //Debug.Log("enegy:" + currentEnergy);
             yield return new WaitForSeconds(lossInterval);
-            if (Mathf.FloorToInt(currentEnergy) != Mathf.FloorToInt(currentEnergy - lossAmount))
-                AudioManager.instance.AudioPlay(AudioManager.instance.vanish);
+            //if (Mathf.FloorToInt(currentEnergy) != Mathf.FloorToInt(currentEnergy - lossAmount))
+            //    AudioManager.instance.AudioPlay(AudioManager.instance.vanish);
             currentEnergy -= lossAmount;
         }
 
@@ -284,8 +284,11 @@ public class Player : MonoBehaviour
                 manager.DestroyAllMeteorites();
                 combo = 0;
             }
-            else 
+            else
+            {
                 AudioManager.instance.AudioPlay(AudioManager.instance.finish_target);
+                superComboAnimator.SetTrigger("Combo");
+            }
         }
         else
             combo = 0;
@@ -330,7 +333,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Planet")
         {
             collision.gameObject.GetComponent<Planet>().SetCollid();
-            ResetPlayer();
+            anim.SetTrigger("Hit");
+            AudioManager.instance.AudioPlay(AudioManager.instance.fracture);
+            TakeDamage();
+            // ResetPlayer();
         }
 
         if (collision.gameObject.tag == "Meteorite")
