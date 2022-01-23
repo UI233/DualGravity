@@ -7,6 +7,8 @@ public class StartVideoController : MonoBehaviour
 {
     [SerializeField]
     VideoPlayer videoPlayer;
+    [SerializeField]
+    AudioSource audioSource;
 
     float timer;
 
@@ -20,6 +22,7 @@ public class StartVideoController : MonoBehaviour
         if (Time.time - timer > videoPlayer.length)
         {
             gameObject.SetActive(false);
+            audioSource.Play();
         }
     }
 
@@ -27,6 +30,7 @@ public class StartVideoController : MonoBehaviour
     {
         Debug.Log("OnMouseDown");
         gameObject.SetActive(false);
+        audioSource.Play();
     }
 
 }
