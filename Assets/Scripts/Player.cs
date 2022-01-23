@@ -37,6 +37,11 @@ public class Player : MonoBehaviour
     public bool fractured;
     [SerializeField]
     private float fragileCountDown;
+    // pause
+    [SerializeField]
+    GameObject canvas;
+    [SerializeField]
+    GameObject pausePanel;
     private void Awake()
     {
         controls = new PlanetInputAction();
@@ -127,6 +132,19 @@ public class Player : MonoBehaviour
             anim.SetBool("Lock", false);
             // anim.enabled = false;
             planet.GetComponent<Planet>().SetLock(false);
+        };
+        controls.GravityControl.Pause.started += _ => {
+            canvas.SetActive(!canvas.activeInHierarchy);
+            pausePanel.SetActive(!canvas.activeInHierarchy);
+            pausePanel.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 3);
+            if (Time.timeScale == 1)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
         };
     }
     private void GetMyComponents()

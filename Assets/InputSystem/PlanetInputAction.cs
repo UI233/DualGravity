@@ -62,6 +62,15 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""30be6a02-245e-413f-9165-b0207fb7ca0a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -262,6 +271,17 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
                     ""action"": ""LockPlanetB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b110c8e-a3d6-4e59-a276-344c1bf5ed1a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -274,6 +294,7 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
         m_GravityControl_PlanetB = m_GravityControl.FindAction("PlanetB", throwIfNotFound: true);
         m_GravityControl_LockPlanetA = m_GravityControl.FindAction("LockPlanetA", throwIfNotFound: true);
         m_GravityControl_LockPlanetB = m_GravityControl.FindAction("LockPlanetB", throwIfNotFound: true);
+        m_GravityControl_Pause = m_GravityControl.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -337,6 +358,7 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
     private readonly InputAction m_GravityControl_PlanetB;
     private readonly InputAction m_GravityControl_LockPlanetA;
     private readonly InputAction m_GravityControl_LockPlanetB;
+    private readonly InputAction m_GravityControl_Pause;
     public struct GravityControlActions
     {
         private @PlanetInputAction m_Wrapper;
@@ -345,6 +367,7 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
         public InputAction @PlanetB => m_Wrapper.m_GravityControl_PlanetB;
         public InputAction @LockPlanetA => m_Wrapper.m_GravityControl_LockPlanetA;
         public InputAction @LockPlanetB => m_Wrapper.m_GravityControl_LockPlanetB;
+        public InputAction @Pause => m_Wrapper.m_GravityControl_Pause;
         public InputActionMap Get() { return m_Wrapper.m_GravityControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -366,6 +389,9 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
                 @LockPlanetB.started -= m_Wrapper.m_GravityControlActionsCallbackInterface.OnLockPlanetB;
                 @LockPlanetB.performed -= m_Wrapper.m_GravityControlActionsCallbackInterface.OnLockPlanetB;
                 @LockPlanetB.canceled -= m_Wrapper.m_GravityControlActionsCallbackInterface.OnLockPlanetB;
+                @Pause.started -= m_Wrapper.m_GravityControlActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GravityControlActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GravityControlActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_GravityControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -382,6 +408,9 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
                 @LockPlanetB.started += instance.OnLockPlanetB;
                 @LockPlanetB.performed += instance.OnLockPlanetB;
                 @LockPlanetB.canceled += instance.OnLockPlanetB;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -392,5 +421,6 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
         void OnPlanetB(InputAction.CallbackContext context);
         void OnLockPlanetA(InputAction.CallbackContext context);
         void OnLockPlanetB(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
