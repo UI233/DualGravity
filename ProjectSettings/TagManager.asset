@@ -44,6 +44,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 3983606685
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Item
+    uniqueID: 3410177715
+    locked: 0
+  - name: Planet
+    uniqueID: 1608053967
+    locked: 0
+  - name: Player
+    uniqueID: 2297428233
+    locked: 0
+  - name: Effect
+    uniqueID: 2771215605
     locked: 0

@@ -4,24 +4,21 @@ using UnityEngine;
 
 abstract public class Item : MonoBehaviour
 {
-    Collider2D collider;
+    protected Collider2D collider;
     public GameObject manager;
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         collider = GetComponent<Collider2D>();
+        // collider.enabled = false ;
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         
     }
     
-    public void Appear()
-    {
-        
-    }
     public void Disapear()
     {
         manager.GetComponent<ItemManager>().Recycle(gameObject);
