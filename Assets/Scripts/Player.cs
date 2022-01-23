@@ -159,7 +159,6 @@ public class Player : MonoBehaviour
         StartCoroutine(EnergyLoss());
     }
     
-    // Update is called once per frame
     void FixedUpdate()
     {
         // this function processes objects' transformation
@@ -181,6 +180,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            // self rotation in locked mode
             var vec2 = new Vector2(planet.transform.position.x, planet.transform.position.y);
             vec2 = vec2 +  Mathf.Cos(theta) * dir0 + Mathf.Sin(theta) * dir1;
             transform.position = new Vector3(vec2.x, vec2.y, transform.position.z);
@@ -190,6 +190,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
     private void Update()
     {
         // fragile state's recovery
@@ -201,6 +202,9 @@ public class Player : MonoBehaviour
                 fractured = false;
             }
         }
+
+        if (currentEnergy < 1e-4)
+            GameOver();
     }
 
     void GenerateTargetBonus()
@@ -208,14 +212,18 @@ public class Player : MonoBehaviour
         for (int i = 0; i < bonusBufferSize; ++i)
             targetBonus[i] = Random.Range(0, 2);
     }
-    // helper functions
-    public void GameOver() 
-    { 
+    private void ResetPlayer()
+    {
         transform.position = new Vector3(0.0f, 0.0f, transform.position.z);
         transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
         rigid2d.angularVelocity = 0.0f;
         rigid2d.velocity = new Vector2(0.0f, 0.0f);
         InitPlayerState();
+    }
+    // helper functions
+    public void GameOver() 
+    { 
+        // todo: change scene
     }
     // energy loss 
     private IEnumerator EnergyLoss()
@@ -281,7 +289,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Planet")
         {
             collision.gameObject.GetComponent<Planet>().SetCollid();
-            GameOver();
+            ResetPlayer();
         }
 
         if (collision.gameObject.tag == "Meteorite")
@@ -294,7 +302,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Item")
         {
             GetItem(collision.gameObject.GetComponent<BonusItem>().bonusType);
-            collision.gameObject.GetComponent<Item>().Disapear();
+            collision.gameObject.GetComponent<BonusItem>().Disapear();
         }
     }
 }

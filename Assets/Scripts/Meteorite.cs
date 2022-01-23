@@ -7,8 +7,8 @@ public class Meteorite : Item
 {
     // Start is called before the first frame update
     // Update is called once per frame
-    void Update()
+    new private void Update()
     {
-        
+        base.Update();
     }
 }

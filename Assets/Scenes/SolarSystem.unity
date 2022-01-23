@@ -3794,8 +3794,8 @@ MonoBehaviour:
   rClean: 10
   rMin: 1
   rMax: 5
-  maxCount: 12
-  spawnSpeed: 2
+  maxCount: 1
+  spawnSpeed: 1
   _prefab:
   - {fileID: 4629314616125024307, guid: ab8f425cf03844f45a9a8878e774c89a, type: 3}
   - {fileID: 5123966449852700578, guid: 6e83d21b894337d4f81a1537fe2b0698, type: 3}
