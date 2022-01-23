@@ -242,8 +242,9 @@ public class Player : MonoBehaviour
     }
     // helper functions
     public void GameOver() 
-    { 
+    {
         // todo: change scene
+        AudioManager.instance.AudioPlay(AudioManager.instance.death);
     }
     // energy loss 
     private IEnumerator EnergyLoss()
@@ -252,6 +253,8 @@ public class Player : MonoBehaviour
         {
             //Debug.Log("enegy:" + currentEnergy);
             yield return new WaitForSeconds(lossInterval);
+            if (Mathf.FloorToInt(currentEnergy) != Mathf.FloorToInt(currentEnergy - lossAmount))
+                AudioManager.instance.AudioPlay(AudioManager.instance.vanish);
             currentEnergy -= lossAmount;
         }
 
@@ -266,10 +269,13 @@ public class Player : MonoBehaviour
             anim.SetTrigger("Combo");
             if (combo == maxCombo)
             {
+                AudioManager.instance.AudioPlay(AudioManager.instance.combo);
                 superComboAnimator.SetTrigger("SuperCombo");
                 manager.DestroyAllMeteorites();
                 combo = 0;
             }
+            else 
+                AudioManager.instance.AudioPlay(AudioManager.instance.finish_target);
         }
         else
             combo = 0;
@@ -283,6 +289,7 @@ public class Player : MonoBehaviour
         if (currentBonus[currentBonus.Count - 1] != targetBonus[currentBonus.Count - 1])
         {
             anim.SetTrigger("Dis");
+            AudioManager.instance.AudioPlay(AudioManager.instance.eat_wrong);
             combo = 0;
             currentBonus.Clear();
             GenerateTargetBonus();
@@ -290,7 +297,10 @@ public class Player : MonoBehaviour
         else if (currentBonus.Count == bonusBufferSize)
             GetBonus();
         else
+        {
+            AudioManager.instance.AudioPlay(AudioManager.instance.eat_right);
             anim.SetTrigger("Happy");
+        }
     }
     private void TakeDamage()
     {
@@ -316,6 +326,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Meteorite")
         {
             anim.SetTrigger("Hit");
+            AudioManager.instance.AudioPlay(AudioManager.instance.fracture);
             TakeDamage();
             collision.gameObject.GetComponent<Item>().Disapear();
         }
