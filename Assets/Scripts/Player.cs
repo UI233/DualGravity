@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
     public int maxCombo;
     // bonus effect
     [SerializeField]
-    private int combo;
+    public int combo;
     public List<int> currentBonus;
     public int[] targetBonus;
     // player's statistics
@@ -44,11 +44,17 @@ public class Player : MonoBehaviour
     GameObject canvas;
     [SerializeField]
     GameObject pausePanel;
+    // gameover
+    [SerializeField]
+    GameObject gameOverPanel;
+    // score
+    public float startTime;
     private void Awake()
     {
         controls = new PlanetInputAction();
         planets = GameObject.FindGameObjectsWithTag("Planet");
         Application.targetFrameRate = 60;
+        startTime = Time.time;
     }
     private void OnEnable()
     {
@@ -243,7 +249,10 @@ public class Player : MonoBehaviour
     // helper functions
     public void GameOver() 
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
+        Time.timeScale = 0;
+        gameOverPanel.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 3);
+        gameOverPanel.SetActive(true);
+        canvas.SetActive(false);
         // todo: change scene
         AudioManager.instance.AudioPlay(AudioManager.instance.death);
     }
