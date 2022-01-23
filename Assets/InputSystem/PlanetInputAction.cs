@@ -209,7 +209,7 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""46645f6e-0f58-4eec-af25-55ed5c81a51c"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -220,7 +220,7 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""e6ed1ddf-a380-436b-9a99-a9f95182005b"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -242,7 +242,7 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c99e08a3-5f11-4150-86fc-b85b56c0a717"",
-                    ""path"": ""<Keyboard>/tab"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -264,7 +264,7 @@ public partial class @PlanetInputAction : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""53580d95-d6b4-4fbe-8a0b-869f812acc7d"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

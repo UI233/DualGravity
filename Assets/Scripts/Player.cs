@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject gameOverPanel;
     // score
+    public int score;
     public float startTime;
     public float invincibleTime;
     private float invincibleCountDown;
@@ -171,6 +172,7 @@ public class Player : MonoBehaviour
     {
         // initialize players' states
         combo = 0;
+        score = 0;
         currentBonus = new List<int>();
         targetBonus = new int[bonusBufferSize];
         // player's statistics
@@ -305,6 +307,7 @@ public class Player : MonoBehaviour
         {
             currentEnergy = Mathf.Min(comboBonus[combo] + currentEnergy, energyLimit);
             ++combo;
+            score += combo;
             anim.SetTrigger("Combo");
             if (combo == maxCombo)
             {

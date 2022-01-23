@@ -10,6 +10,6 @@ public class Combos : MonoBehaviour
     TextMesh combo;
     private void Update()
     {
-        combo.text = player.combo.ToString();
+        combo.text = player.score.ToString();
     }
 }
