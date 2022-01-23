@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     private CircleCollider2D collider;
     public PlanetInputAction controls;
     public bool locked;
+    public GameObject InvincibleShell;
+    public GameObject PlayerLight;
     public Vector2 myForce { get; set; }
     // helper component
     public MeteoriteManager manager;
@@ -49,6 +51,9 @@ public class Player : MonoBehaviour
     GameObject gameOverPanel;
     // score
     public float startTime;
+    public float invincibleTime;
+    private float invincibleCountDown;
+    private bool invincible;
     private void Awake()
     {
         controls = new PlanetInputAction();
@@ -172,6 +177,9 @@ public class Player : MonoBehaviour
         currentEnergy = initialEnergy;
         fractured = false;
         GenerateTargetBonus();
+        invincible = false;
+        InvincibleShell.SetActive(false);
+        PlayerLight.SetActive(true);
         if (maxCombo != comboBonus.Length)
             throw new System.IndexOutOfRangeException("Combo does not match");
         // Energy Loss
@@ -216,6 +224,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    void DisableInvincible()
+    {
+        InvincibleShell.SetActive(false);
+        PlayerLight.SetActive(true);
+        invincible = false;
+    }
+
+    void EnableInvincible()
+    {
+        InvincibleShell.SetActive(true);
+        PlayerLight.SetActive(false);
+        invincible = true;
+        invincibleCountDown = invincibleTime;
+    }
     // Update is called once per frame
     private void Update()
     {
@@ -227,6 +249,13 @@ public class Player : MonoBehaviour
             {
                 fractured = false;
             }
+        }
+
+        if (invincible)
+        {
+            invincibleCountDown -= Time.deltaTime;
+            if (invincibleCountDown < 1e-3f)
+                DisableInvincible();
         }
 
         if (currentEnergy < 1e-4)
@@ -289,6 +318,9 @@ public class Player : MonoBehaviour
                 AudioManager.instance.AudioPlay(AudioManager.instance.finish_target);
                 superComboAnimator.SetTrigger("Combo");
             }
+
+            if (combo == maxCombo - 1)
+                EnableInvincible();
         }
         else
             combo = 0;
@@ -330,7 +362,7 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Planet")
+        if (collision.gameObject.tag == "Planet" && !invincible)
         {
             collision.gameObject.GetComponent<Planet>().SetCollid();
             anim.SetTrigger("Hit");
@@ -339,7 +371,7 @@ public class Player : MonoBehaviour
             // ResetPlayer();
         }
 
-        if (collision.gameObject.tag == "Meteorite")
+        if (collision.gameObject.tag == "Meteorite" && !invincible)
         {
             anim.SetTrigger("Hit");
             AudioManager.instance.AudioPlay(AudioManager.instance.fracture);
