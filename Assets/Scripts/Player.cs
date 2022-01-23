@@ -324,7 +324,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Planet")
         {
             collision.gameObject.GetComponent<Planet>().SetCollid();
-            ResetPlayer();
+            anim.SetTrigger("Hit");
+            AudioManager.instance.AudioPlay(AudioManager.instance.fracture);
+            TakeDamage();
+            // ResetPlayer();
         }
 
         if (collision.gameObject.tag == "Meteorite")
