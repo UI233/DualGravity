@@ -36,11 +36,19 @@ abstract public class ItemManager : MonoBehaviour
         StartCoroutine(CleanItem());
         spawnNum = 0.0f;
     }
-    protected void SpawnObject(GameObject item, Vector3 initPos)
+    virtual protected void SpawnObject(GameObject item, Vector3 initPos)
     {
         item.SetActive(true);
         initPos.z = depth;
         item.transform.position = initPos;
+    }
+    protected Vector2 GetRandomPosition()
+    {
+        float radius = Random.Range(rMin, rMax);
+        float theta = Random.Range(0.0f, Mathf.PI * 2.0f);
+        Vector2 pos = radius * new Vector2(Mathf.Cos(theta), Mathf.Sin(theta))
+                    + new Vector2(player.transform.position.x, player.transform.position.y);
+        return pos;
     }
     protected void DisableObject(GameObject item)
     {
@@ -52,11 +60,9 @@ abstract public class ItemManager : MonoBehaviour
     }
     protected bool InstantiateNewItem()
     {
-        float radius = Random.Range(rMin, rMax);
-        float theta = Random.Range(0.0f, Mathf.PI * 2.0f);
-        Vector2 pos = radius * new Vector2(Mathf.Cos(theta), Mathf.Sin(theta))
-                    + new Vector2(player.transform.position.x, player.transform.position.y);
+
         GameObject item = null;
+        Vector2 pos = GetRandomPosition();
         // return from object pool
         if (objectsPool.Count != 0)
             item = objectsPool.Dequeue();
