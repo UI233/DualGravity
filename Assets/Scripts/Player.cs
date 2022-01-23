@@ -243,6 +243,7 @@ public class Player : MonoBehaviour
     // helper functions
     public void GameOver() 
     {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
         // todo: change scene
         AudioManager.instance.AudioPlay(AudioManager.instance.death);
     }
