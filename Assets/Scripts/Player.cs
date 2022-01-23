@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
 {
     // my components
     private Animator anim;
+    [SerializeField]
+    private Animator superComboAnimator;
     private GameObject[] planets;
     private Rigidbody2D rigid2d;
     private CircleCollider2D collider;
@@ -246,6 +248,7 @@ public class Player : MonoBehaviour
             anim.SetTrigger("Combo");
             if (combo == maxCombo)
             {
+                superComboAnimator.SetTrigger("SuperCombo");
                 manager.DestroyAllMeteorites();
                 combo = 0;
             }
